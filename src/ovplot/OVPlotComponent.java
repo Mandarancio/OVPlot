@@ -121,9 +121,13 @@ public class OVPlotComponent extends OVComponentContainer {
     }
 
     private void initMenu() {
-        menu_=new JMenu("Plot");
+		menu_ = new JMenu("Plot");
         JMenuItem i=new JMenuItem(ClassKey.PlotL);
         i.setActionCommand(i.getText());
         menu_.add(i);
     }
+    
+	public static String getKey(){
+		return "Plot component";
+	}
 }

@@ -23,7 +23,7 @@ import core.SlotListener;
 import core.Value;
 import core.ValueType;
 
-public class OVPlot extends OVNodeComponent implements SlotListener {
+public class OVValuePlot extends OVNodeComponent implements SlotListener {
 
 	public enum PlotType {
 
@@ -44,9 +44,9 @@ public class OVPlot extends OVNodeComponent implements SlotListener {
 
 	// private InNode yInNode_;
 
-	public OVPlot(OVContainer father) {
+	public OVValuePlot(OVContainer father) {
 		super(father);
-		Setting s = new Setting(_Plot, "plot");
+		Setting s = new Setting(_Plot, "line");
 		addNodeSetting(ComponentSettings.SpecificCategory, s);
 		s = new Setting(_Type, PlotType.LINE);
 		addNodeSetting(ComponentSettings.SpecificCategory, s);
@@ -56,16 +56,16 @@ public class OVPlot extends OVNodeComponent implements SlotListener {
 			plotPanel_ = ((OVPlotComponent) father);
 		}
 
-		InNode n = addInput(_Xin, ValueType.VOID);
+		InNode n = addInput(_Xin, ValueType.DOUBLE);
 		n.addListener(this);
-		n = addInput(_Yin, ValueType.VOID);
+		n = addInput(_Yin, ValueType.DOUBLE);
 		n.addListener(this);
 		n = addInput(_Clear, ValueType.VOID);
 		n.addListener(this);
 
 	}
 
-	public OVPlot(Element e, OVContainer father) {
+	public OVValuePlot(Element e, OVContainer father) {
 		super(e, father);
 		for (InNode n : inputs_) {
 			n.addListener(this);
@@ -113,7 +113,7 @@ public class OVPlot extends OVNodeComponent implements SlotListener {
 				plot_ = new ScatterPlot(name, color, values_);
 				break;
 			case HISTOGRAM:
-				plot_ = new HistogramPlot2D(name, color, values_, 10);
+				plot_ = new HistogramPlot2D(name, color, values_, 0.1);
 				break;
 			case CLOUD:
 				plot_ = new CloudPlot2D(name, color, values_, 3, 3);
@@ -196,5 +196,9 @@ public class OVPlot extends OVNodeComponent implements SlotListener {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static String getKey(){
+		return "Value Plot";
 	}
 }
