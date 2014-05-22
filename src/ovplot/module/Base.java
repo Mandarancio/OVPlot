@@ -11,12 +11,9 @@ import gui.components.OVComponent;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.swing.JMenu;
-
 import ovplot.OVPlotComponent;
 import ovplot.OVValuePlot;
 import core.module.BaseModule;
-import core.support.EnumManager;
 
 /**
  * 
@@ -26,19 +23,13 @@ public class Base extends BaseModule {
 
 	public Base() {
 		super("OVPlot", "0.1");
-		EnumManager.addEnum(OVValuePlot.PlotType.class);
 	}
 
 	@Override
-	public ArrayList<JMenu> getNodeMenus() {
-		ArrayList<JMenu> menus = new ArrayList<>();
-		return menus;
-	}
-
-	@Override
-	public ArrayList<JMenu> getGuiMenus() {
-		ArrayList<JMenu> menus = new ArrayList<>();
-		return menus;
+	public ArrayList<Class<? extends Enum<?>>> getEnums() {
+		ArrayList<Class<? extends Enum<?>>> list = super.getEnums();
+		list.add(OVValuePlot.PlotType.class);
+		return list;
 	}
 
 	@Override
