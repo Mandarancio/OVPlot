@@ -11,6 +11,9 @@ import gui.components.OVComponent;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+
 import ovplot.OVArrayPlot;
 import ovplot.OVPlotComponent;
 import ovplot.OVValuePlot;
@@ -31,6 +34,17 @@ public class Base extends BaseModule {
 	public ArrayList<Class<? extends Enum<?>>> getEnums() {
 		ArrayList<Class<? extends Enum<?>>> list = super.getEnums();
 		list.add(PlotType.class);
+		return list;
+	}
+
+	@Override
+	public ArrayList<JMenu> getGuiMenus() {
+		ArrayList<JMenu> list = super.getGuiMenus();
+		JMenu m = new JMenu("OVPlot");
+		JMenuItem i = new JMenuItem(OVPlotComponent.getKey());
+		i.setActionCommand(i.getText());
+		m.add(i);
+		list.add(m);
 		return list;
 	}
 
