@@ -37,9 +37,9 @@ public class OVPlotComponent extends OVComponentContainer {
 		getSetting(ComponentSettings.SizeW).setValue(300);
 		getSetting(ComponentSettings.SizeH).setValue(300);
 		getSetting(ComponentSettings.Name).setValue("PlotPanel");
-		Setting s = new Setting(xAxis, "X");
+		Setting s = new Setting(xAxis, "X", this);
 		addSetting(ComponentSettings.SpecificCategory, s);
-		s = new Setting(yAxis, "Y");
+		s = new Setting(yAxis, "Y", this);
 		addSetting(ComponentSettings.SpecificCategory, s);
 		initPlot();
 		initMenu();

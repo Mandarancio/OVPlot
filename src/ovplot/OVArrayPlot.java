@@ -41,11 +41,11 @@ public class OVArrayPlot extends OVNodeComponent implements SlotListener {
 
 	public OVArrayPlot(OVContainer father) {
 		super(father);
-		Setting s = new Setting(_Plot, "line");
+		Setting s = new Setting(_Plot, "line", this);
 		addNodeSetting(ComponentSettings.SpecificCategory, s);
-		s = new Setting(_Type, PlotType.LINE);
+		s = new Setting(_Type, PlotType.LINE, this);
 		addNodeSetting(ComponentSettings.SpecificCategory, s);
-		s = new Setting(_Color, new Color(255, 0, 0));
+		s = new Setting(_Color, new Color(255, 0, 0), this);
 		addNodeSetting(ComponentSettings.SpecificCategory, s);
 		if (father instanceof OVPlotComponent) {
 			plotPanel_ = ((OVPlotComponent) father);
