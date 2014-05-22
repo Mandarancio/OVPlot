@@ -120,11 +120,8 @@ public class OVPlotComponent extends OVComponentContainer {
 
 	@Override
 	public boolean compatible(OVComponent c) {
-		if ((c instanceof OVValuePlot || c instanceof OVArrayPlot)
-				&& getMode() == EditorMode.NODE) {
-			return true;
-		}
-		return false;
+		return (c instanceof OVValuePlot || c instanceof OVArrayPlot)
+                        && getMode() == EditorMode.NODE;
 	}
 
 	public Plot2DPanel getPlot() {
