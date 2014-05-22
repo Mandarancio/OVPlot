@@ -7,6 +7,7 @@ import gui.enums.EditorMode;
 import gui.interfaces.OVContainer;
 
 import java.awt.Color;
+import java.util.ArrayList;
 
 import org.math.plot.plots.BarPlot;
 import org.math.plot.plots.CloudPlot2D;
@@ -23,7 +24,7 @@ import core.SlotListener;
 import core.Value;
 import core.ValueType;
 
-public class OVValuePlot extends OVNodeComponent implements SlotListener {
+public class OVArrayPlot extends OVNodeComponent implements SlotListener {
 
 	/**
      *
@@ -31,15 +32,14 @@ public class OVValuePlot extends OVNodeComponent implements SlotListener {
 	private static final long serialVersionUID = 1146188205942638920L;
 	private static final String _Type = "Type", _Plot = "Plot",
 			_Color = "Color";
-	private static final String _Xin = "X in", _Yin = "Y in", _Clear = "Clear";
+	private static final String _in = "in", _Clear = "Clear";
 	private OVPlotComponent plotPanel_;
 	private Plot plot_;
 	private double[][] values_ = null;
-	private int _xCounter, _yCounter;
 
 	// private InNode yInNode_;
 
-	public OVValuePlot(OVContainer father) {
+	public OVArrayPlot(OVContainer father) {
 		super(father);
 		Setting s = new Setting(_Plot, "line");
 		addNodeSetting(ComponentSettings.SpecificCategory, s);
@@ -51,17 +51,16 @@ public class OVValuePlot extends OVNodeComponent implements SlotListener {
 			plotPanel_ = ((OVPlotComponent) father);
 		}
 
-		InNode n = addInput(_Xin, ValueType.DOUBLE);
-		n.addListener(this);
-		n = addInput(_Yin, ValueType.DOUBLE);
+		InNode n = addInput(_in, ValueType.ARRAY);
 		n.addListener(this);
 		n = addInput(_Clear, ValueType.VOID);
 		n.addListener(this);
 
-		getSetting(ComponentSettings.Name).setValue("Line");
+		getSetting(ComponentSettings.Name).setValue("A.Line");
+
 	}
 
-	public OVValuePlot(Element e, OVContainer father) {
+	public OVArrayPlot(Element e, OVContainer father) {
 		super(e, father);
 		for (InNode n : inputs_) {
 			n.addListener(this);
@@ -84,8 +83,6 @@ public class OVValuePlot extends OVNodeComponent implements SlotListener {
 	public void setMode(EditorMode mode) {
 		if (mode.isExec()) {
 			values_ = new double[0][0];
-			_xCounter = 0;
-			_yCounter = 0;
 		} else {
 			if (plotPanel_ != null && plotPanel_.getPlot() != null) {
 				plotPanel_.getPlot().removePlot(plot_);
@@ -130,59 +127,40 @@ public class OVValuePlot extends OVNodeComponent implements SlotListener {
 	@Override
 	public void valueRecived(SlotInterface s, Value v) {
 		try {
-			if (s.getLabel().equals(_Xin)) {
-				if (v.getType().isNumeric()) {
-					if (_xCounter >= _yCounter) {
-						double arr[][] = new double[_xCounter + 1][2];
-
-						for (int i = 0; i < _xCounter; i++) {
-							arr[i][0] = values_[i][0];
-							arr[i][1] = values_[i][1];
+			if (s.getLabel().equals(_in)) {
+				if (v.getType().isArray()) {
+					ArrayList<Value> values = v.getArray();
+					if (values.size() > 0) {
+						if (values.get(0).getType().isNumeric()) {
+							values_ = new double[values.size()][2];
+							for (int i = 0; i < values.size(); i++) {
+								values_[i][0] = i;
+								values_[i][1] = values.get(i).getDouble();
+							}
+							if (plot_ == null) {
+								initPlot();
+							}
+							plot_.setData(values_);
+							plotPanel_.revalidate();
+							plotPanel_.getPlot().setAutoBounds();
+						} else if (values.get(0).getType().isArray()) {
+							values_ = new double[values.size()][2];
+							for (int i = 0; i < values.size(); i++) {
+								values_[i][0] = values.get(i).getValues()[0]
+										.getDouble();
+								values_[i][1] = values.get(i).getValues()[1]
+										.getDouble();
+							}
+							if (plot_ == null) {
+								initPlot();
+							}
+							plot_.setData(values_);
+							plotPanel_.revalidate();
+							plotPanel_.getPlot().setAutoBounds();
 						}
-						arr[_xCounter][0] = v.getDouble();
-						values_ = arr;
-						_xCounter++;
-					} else {
-						values_[_xCounter][0] = v.getDouble();
-						// if (yInNode_.isFree()){
-						// values_[_xCounter][1]=_xCounter;
-						// _yCounter++;
-						// }
-						_xCounter++;
-					}
-					if (_xCounter == _yCounter) {
-						if (plot_ == null) {
-							initPlot();
-						}
-						plot_.setData(values_);
-						plotPanel_.revalidate();
-						plotPanel_.getPlot().setAutoBounds();
-					}
-				}
-			} else if (s.getLabel().equals(_Yin)) {
-				if (v.getType().isNumeric()) {
-					if (_yCounter >= _xCounter) {
-						double arr[][] = new double[_yCounter + 1][2];
-
-						for (int i = 0; i < _yCounter; i++) {
-							arr[i][0] = values_[i][0];
-							arr[i][1] = values_[i][1];
-						}
-						arr[_yCounter][1] = v.getDouble();
-						values_ = arr;
-						_yCounter++;
-					} else {
-						values_[_yCounter][1] = v.getDouble();
-						_yCounter++;
-					}
-					if (_xCounter == _yCounter) {
-						if (plot_ == null) {
-							initPlot();
-						}
-						plot_.setData(values_);
-						plotPanel_.getPlot().setAutoBounds();
 					}
 				}
+
 			} else if (s.getLabel().equals(_Clear)) {
 				if (plot_ != null) {
 					plotPanel_.getPlot().removePlot(plot_);
@@ -193,8 +171,8 @@ public class OVValuePlot extends OVNodeComponent implements SlotListener {
 			e.printStackTrace();
 		}
 	}
-	
-	public static String getKey(){
-		return "Value Plot";
+
+	public static String getKey() {
+		return "Array Plot";
 	}
 }

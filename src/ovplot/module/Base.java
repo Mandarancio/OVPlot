@@ -11,8 +11,10 @@ import gui.components.OVComponent;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import ovplot.OVArrayPlot;
 import ovplot.OVPlotComponent;
 import ovplot.OVValuePlot;
+import ovplot.PlotType;
 import core.module.BaseModule;
 
 /**
@@ -28,7 +30,7 @@ public class Base extends BaseModule {
 	@Override
 	public ArrayList<Class<? extends Enum<?>>> getEnums() {
 		ArrayList<Class<? extends Enum<?>>> list = super.getEnums();
-		list.add(OVValuePlot.PlotType.class);
+		list.add(PlotType.class);
 		return list;
 	}
 
@@ -36,6 +38,7 @@ public class Base extends BaseModule {
 	public HashMap<String, Class<? extends OVComponent>> getComponents() {
 		HashMap<String, Class<? extends OVComponent>> classes = new HashMap<>();
 		classes.put(OVValuePlot.getKey(), OVValuePlot.class);
+		classes.put(OVArrayPlot.getKey(), OVArrayPlot.class);
 		classes.put(OVPlotComponent.getKey(), OVPlotComponent.class);
 		return classes;
 	}
