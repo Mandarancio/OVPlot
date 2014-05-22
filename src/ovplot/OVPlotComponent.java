@@ -16,12 +16,18 @@ import javax.swing.JMenuItem;
 import org.math.plot.Plot2DPanel;
 import org.w3c.dom.Element;
 
+import core.Setting;
+import core.Value;
+
 public class OVPlotComponent extends OVComponentContainer {
 
 	/**
      *
      */
 	private static final long serialVersionUID = 1L;
+	private static final String xAxis = "X axis";
+	private static final String yAxis = "Y axis";
+
 	private Plot2DPanel plot_;
 	private JMenu menu_;
 
@@ -30,7 +36,11 @@ public class OVPlotComponent extends OVComponentContainer {
 		this.setLayout(new BorderLayout());
 		getSetting(ComponentSettings.SizeW).setValue(300);
 		getSetting(ComponentSettings.SizeH).setValue(300);
-		getSetting(ComponentSettings.Name).setValue("Plot");
+		getSetting(ComponentSettings.Name).setValue("PlotPanel");
+		Setting s = new Setting(xAxis, "X");
+		addSetting(ComponentSettings.SpecificCategory, s);
+		s = new Setting(yAxis, "Y");
+		addSetting(ComponentSettings.SpecificCategory, s);
 		initPlot();
 		initMenu();
 	}
@@ -41,10 +51,13 @@ public class OVPlotComponent extends OVComponentContainer {
 
 		initPlot();
 		initMenu();
+		triggerSettings();
 	}
 
 	private void initPlot() {
 		plot_ = new Plot2DPanel();
+		plot_.setAxisLabel(0, "X");
+		plot_.setAxisLabel(1, "Y");
 		this.add(plot_, BorderLayout.CENTER);
 	}
 
@@ -126,6 +139,16 @@ public class OVPlotComponent extends OVComponentContainer {
 		i = new JMenuItem(OVArrayPlot.getKey());
 		i.setActionCommand(i.getText());
 		menu_.add(i);
+	}
+
+	@Override
+	public void valueUpdated(Setting s, Value v) {
+		if (s.getName().equals(xAxis)) {
+			plot_.setAxisLabel(0, v.getString());
+		} else if (s.getName().equals(yAxis)) {
+			plot_.setAxisLabel(1, v.getString());
+		} else
+			super.valueUpdated(s, v);
 	}
 
 	public static String getKey() {
