@@ -106,10 +106,10 @@ public class OVArrayPlot extends OVNodeComponent implements SlotListener {
 				plot_ = new ScatterPlot(name, color, values_);
 				break;
 			case HISTOGRAM:
-				plot_ = new HistogramPlot2D(name, color, values_, 0.1);
+				plot_ = new HistogramPlot2D(name, color, values_, 0.5);
 				break;
 			case CLOUD:
-				plot_ = new CloudPlot2D(name, color, values_, 3, 3);
+				plot_ = new CloudPlot2D(name, color, values_, 0.2, 0.2);
 				break;
 			case BAR:
 				plot_ = new BarPlot(name, color, values_);
