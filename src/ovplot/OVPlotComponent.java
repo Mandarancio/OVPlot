@@ -6,6 +6,7 @@ import gui.components.nodes.Line;
 import gui.constants.ComponentSettings;
 import gui.enums.EditorMode;
 import gui.interfaces.OVContainer;
+import gui.support.Setting;
 
 import java.awt.BorderLayout;
 import java.awt.Point;
@@ -16,7 +17,6 @@ import javax.swing.JMenuItem;
 import org.math.plot.Plot2DPanel;
 import org.w3c.dom.Element;
 
-import core.Setting;
 import core.Value;
 
 public class OVPlotComponent extends OVComponentContainer {

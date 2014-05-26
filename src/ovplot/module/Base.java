@@ -21,13 +21,14 @@ import ovplot.PlotType;
 import core.module.BaseModule;
 
 /**
+ * This will provide all the basic information to the module loading sub-sistem
  * 
  * @author martino
  */
 public class Base extends BaseModule {
 
 	public Base() {
-		super("OVPlot", "0.1","Martino Ferrari <manda.mgf@gmail.com>");
+		super("OVPlot", "0.1", "Martino Ferrari <manda.mgf@gmail.com>");
 	}
 
 	@Override

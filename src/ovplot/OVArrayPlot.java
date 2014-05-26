@@ -5,6 +5,7 @@ import gui.components.ovnode.OVNodeComponent;
 import gui.constants.ComponentSettings;
 import gui.enums.EditorMode;
 import gui.interfaces.OVContainer;
+import gui.support.Setting;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -18,7 +19,6 @@ import org.math.plot.plots.ScatterPlot;
 import org.math.plot.plots.StaircasePlot;
 import org.w3c.dom.Element;
 
-import core.Setting;
 import core.SlotInterface;
 import core.SlotListener;
 import core.Value;
