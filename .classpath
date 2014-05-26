@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry including="ovplot/|ovplot/OVArrayPlot.java|ovplot/OVPlotComponent.java|ovplot/OVValuePlot.java|ovplot/PlotType.java|ovplot/module|ovplot/module/Base.java" kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/"/>
 	<classpathentry kind="lib" path="resource/jmathplot.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/OpenView"/>
