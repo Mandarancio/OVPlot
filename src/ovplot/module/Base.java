@@ -27,7 +27,7 @@ import core.module.BaseModule;
 public class Base extends BaseModule {
 
 	public Base() {
-		super("OVPlot", "0.1");
+		super("OVPlot", "0.1","Martino Ferrari <manda.mgf@gmail.com>");
 	}
 
 	@Override
