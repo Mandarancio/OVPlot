@@ -2,7 +2,7 @@ package ovplot;
 
 import gui.components.OVComponent;
 import gui.components.OVComponentContainer;
-import gui.components.nodes.Line;
+import gui.components.nodes.OVLine;
 import gui.constants.ComponentSettings;
 import gui.enums.EditorMode;
 import gui.interfaces.OVContainer;
@@ -85,7 +85,7 @@ public class OVPlotComponent extends OVComponentContainer {
 	}
 
 	private void showAll() {
-		for (Line l : lines_) {
+		for (OVLine l : lines_) {
 			if (l.getParent() == null) {
 				this.add(l);
 			}
@@ -100,7 +100,7 @@ public class OVPlotComponent extends OVComponentContainer {
 	}
 
 	private void hideAll() {
-		for (Line l : lines_) {
+		for (OVLine l : lines_) {
 			this.remove(l);
 		}
 		for (OVComponent c : components_) {
