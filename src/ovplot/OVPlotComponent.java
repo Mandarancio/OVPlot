@@ -121,7 +121,7 @@ public class OVPlotComponent extends OVComponentContainer {
 	@Override
 	public boolean compatible(OVComponent c) {
 		return (c instanceof OVValuePlot || c instanceof OVArrayPlot)
-                        && getMode() == EditorMode.NODE;
+				&& getMode() == EditorMode.NODE;
 	}
 
 	public Plot2DPanel getPlot() {
@@ -140,10 +140,12 @@ public class OVPlotComponent extends OVComponentContainer {
 
 	@Override
 	public void valueUpdated(Setting s, Value v) {
-		if (s.getName().equals(xAxis)) {
-			plot_.setAxisLabel(0, v.getString());
-		} else if (s.getName().equals(yAxis)) {
-			plot_.setAxisLabel(1, v.getString());
+		if (s != null && s.getName().equals(xAxis)) {
+			if (plot_ != null)
+				plot_.setAxisLabel(0, v.getString());
+		} else if (s != null && s.getName().equals(yAxis)) {
+			if (plot_ != null)
+				plot_.setAxisLabel(1, v.getString());
 		} else
 			super.valueUpdated(s, v);
 	}
